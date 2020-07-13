@@ -1,0 +1,191 @@
+﻿@font-face {
+    font-family: 'yekan';
+    src: url("../fonts/yekanweb.eot");
+    src: url("../fonts/yekanweb.eot?#iefix") format("embedded-opentype"),url("../fonts/yekanweb.woff") format("woff"),url("../fonts/yekanweb.ttf") format("truetype"),url("../fonts/yekanweb.svg#web_Yekan") format("svg");
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+@font-face {
+    font-family: 'yekan';
+    src: url("../fonts/fontawesome-webfont.eot");
+    src: url("../fonts/fontawesome-webfont.eot?#iefix") format("embedded-opentype"),url("../fonts/fontawesome-webfont.woff") format("woff"),url("../fonts/fontawesome-webfont.ttf") format("truetype"),url("../fonts/fontawesome-webfont.svg#web_Yekan") format("svg");
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+@font-face {
+    font-family: 'numbers';
+    src: url("../fonts/yekannumbers.eot");
+    src: url("../fonts/yekannumbers.eot?#iefix") format("embedded-opentype"),url("../fonts/yekannumbers.woff") format("woff"),url("../fonts/yekannumbers.ttf") format("truetype"),url("../fonts/yekannumbers.svg#web_Yekan") format("svg");
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'fowe', 'numbers', 'yekan' !important;
+    font-size: 14px;
+    color: #505050;
+    background-color: #fff;
+    overflow-x: hidden;
+}
+
+
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+
+
+
+.slider-layer {
+    direction: ltr;
+    width: 100%;
+    position: relative;
+    border-bottom: 2px solid #008DDE;
+}
+
+    .slider-layer a {
+        width: 100%;
+        display: block;
+    }
+
+    .slider-layer img {
+        width: 100%;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    .slider-layer .owl-dots .owl-dot {
+        width: 15px;
+        height: 15px;
+        background-color: #fff;
+        border-radius: 100%;
+        -moz-border-radius: 100%;
+        -webkit-border-radius: 100%;
+        float: left;
+        margin-right: 3px;
+    }
+
+    .slider-layer .owl-dots .active {
+        background-color: #008DDE;
+    }
+
+    .slider-layer .owl-controls {
+        position: absolute;
+        bottom: 7%;
+        left: 8%;
+        z-index: 1000 !important;
+    }
+
+
+.login {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.loginContainer {
+    width: 100%;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: #ebeeef;
+}
+
+.wraplogin {
+    width: 670px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.loginFormTitle {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    padding: 70px 15px 74px 15px;
+}
+
+.loginForm {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 43px 88px 93px 190px;
+}
+
+.validateInput {
+    position: relative;
+}
+
+.wrapInput {
+    width: 100%;
+    position: relative;
+}
+
+.label-input {
+    font-family: Poppins-Regular;
+    font-size: 15px;
+    color: #808080;
+    line-height: 1.2;
+    text-align: right;
+    position: absolute;
+    top: 14px;
+    left: -105px;
+    width: 80px;
+}
+
+.inputlogin {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: right;
+    margin-top: 20px;
+}
+
+inputFocus {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}

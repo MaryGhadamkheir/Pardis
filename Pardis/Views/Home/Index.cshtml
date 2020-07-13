@@ -1,0 +1,209 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<link href="~/Content/Site.css" rel="stylesheet" />
+<script>
+
+    try {
+        var TotalViewModel = {
+            DetailViewModel: ko.observable(null),
+        }
+        $(document).ready(function () {
+            function vm() {
+                var self = this;
+                /*======Slider============================*/
+                {
+                    self.SliderImagesList = ko.observableArray([]);
+                    self.getAllImagesSlide = function (keyName, backFunc) {
+                        $.ajax({
+                            type: "POST",
+                            async: true,
+                            contentType: 'application/json; charset=utf-8',
+                            url: '/Home/GetSliderImages',
+                            success: function (rs) {
+                                if (rs.successful) {
+                                    backFunc({
+                                        key: keyName,
+                                        ok: true,
+                                        lstImages: rs.imagesList,
+                                        errorString: rs.ErrorMessage
+                                    });
+                                }
+                                else {
+                                    backFunc({
+                                        key: keyName,
+                                        ok: false,
+                                        lstImages: rs.imagesList,
+                                        errorString: rs.ErrorMessage
+                                    });
+                                }
+
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                backFunc({
+                                    key: keyName,
+                                    ok: false,
+                                    lstImages: null,
+                                    errorString: 'خطا در فراخوانی متد بدست آوردن لیست املاک موجود!'
+                                });
+                            }
+                        })
+                    }
+                }
+                /*======Chart Js=============================*/
+                {
+                    var ctx = $('#pardisChart');
+                    var lineChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"],
+                            datasets: [
+                                {
+                                    label: 'مقادیر میتوانند تعداد تسک های انجام شده در هر ماه باشد ',
+                                    data: [10, 37, 20, 4, 56, 27, 54, 45, 61, 13, 39, 10]
+                                }
+                            ],
+                        }
+                    });
+                }
+                /*======Task=============================*/
+                {
+                    self.AllWaitingTasksList = ko.observableArray([]);
+                    self.getAllWaitingTasksList = function (keyName, backFunc) {
+                        $.ajax({
+                            type: "POST",
+                            async: true,
+                            contentType: 'application/json; charset=utf-8',
+                            url: '/Home/GetTaskList',
+                            success: function (rs) {
+                                if (rs.successful) {
+                                    backFunc({
+                                        key: keyName,
+                                        ok: true,
+                                        lstTask: rs.taskList,
+                                        errorString: rs.ErrorMessage
+                                    });
+                                }
+                                else {
+                                    backFunc({
+                                        key: keyName,
+                                        ok: false,
+                                        lstTask: rs.taskList,
+                                        errorString: rs.ErrorMessage
+                                    });
+                                }
+
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                backFunc({
+                                    key: keyName,
+                                    ok: false,
+                                    lstTask: null,
+                                    errorString: 'خطا در فراخوانی متد بدست آوردن لیست task های موجود در وضعیت در انتظار بررسی!'
+                                });
+                            }
+                        })
+                    }
+                }
+                /*======Page Load============================*/
+                function afterExecuteMainPageMethod(data) {
+                    switch (data.key) {
+                        case 'afterGetAllImages':
+                            self.SliderImagesList([]);
+                            if (data.ok) {
+                                self.SliderImagesList(data.lstImages);
+                            }
+                            else {
+                                alert(data.errorString);
+                            }
+                            self.getAllWaitingTasksList('afterGetTasks', afterExecuteMainPageMethod);
+                            break;
+                        case 'afterGetTasks':
+                            self.AllWaitingTasksList([]);
+                            if (data.ok) {
+                                self.AllWaitingTasksList(data.lstTask);
+                            }
+                            else {
+                                alert(data.errorString);
+                            }
+                            break;
+
+                    }
+                }
+
+                self.pageLoad = function () {
+                    self.getAllImagesSlide('afterGetAllImages', afterExecuteMainPageMethod);
+                    
+                }
+                self.pageLoad();
+            }
+            TotalViewModel.DetailViewModel(vm);
+            ko.applyBindings(TotalViewModel);
+        })
+    } catch (error) {
+        alert(error.message);
+    }
+
+</script>
+<div data-bind="with: TotalViewModel.DetailViewModel">
+    <div style="width: 100%;">
+        <div id="chart" style="float: right; width: 49%;border: 1px solid #dfdfdf; border-radius: 6px; padding: 10px;max-height: 300px; height: 300px;">
+            <canvas id="pardisChart"></canvas>
+        </div>
+        <div id="task" style="width: 49%;border: 1px solid #dfdfdf; border-radius: 6px; padding: 10px;max-height: 300px; height: 300px; overflow-y: scroll;">
+            <div data-bind="visible: AllWaitingTasksList().length > 0 ">
+                <table class="table table-bordered" dir="rtl">
+                    <thead>
+                        <tr>
+                            <th><span>عنوان</span></th>
+                            <th><span>تاریخ ایجاد </span></th>
+                            <th><span>کاربر</span></th>
+                            <th><span>تاریخ شروع</span></th>
+                            <th><span>تاریخ اتمام کار </span></th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: AllWaitingTasksList">
+                        <tr>
+                            <td><span data-bind="text: TaskName"></span></td>
+                            <td><span data-bind="text: faCreateDate"></span></td>
+                            <td><span data-bind="text: UserName"></span></td>
+                            <td><span data-bind="text: faStartDate"></span></td>
+                            <td><span data-bind="text: faEndDate"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div data-bind="visible: AllWaitingTasksList().length == 0 ">
+                <span>موردی یافت نشد </span>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+
+        <div id="myCarousel" class="carousel slide" data-ride="carousel" style="margin-top: 10px !important;">
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" data-bind="foreach: SliderImagesList">
+                <div data-bind="class: ClassName">
+                    <a data-bind="attr: { href: SlideLink }" target="_blank">
+                        <img data-bind="attr:{src: '/Images/' + ImageName, alt: SlideName}" style="width:100%; height:250px;">
+                    </a>
+                </div>
+            </div>
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+    </div>
+</div>

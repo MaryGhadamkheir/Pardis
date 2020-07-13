@@ -1,0 +1,438 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PardisDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BaseInfo">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="smallint" Nullable="false" />
+          <Property Name="StatusTitle" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LogUserLogin">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="LogDate" Type="datetime" Nullable="false" />
+          <Property Name="Status" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sliders">
+          <Key>
+            <PropertyRef Name="SlideID" />
+          </Key>
+          <Property Name="SlideID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SlideName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="SlideLink" Type="nvarchar" MaxLength="250" />
+          <Property Name="ImageName" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="ClassName" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="TaskID" />
+          </Key>
+          <Property Name="TaskID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="Status" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserTasks">
+          <Key>
+            <PropertyRef Name="UTID" />
+          </Key>
+          <Property Name="UTID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="TaskID" Type="bigint" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PardisDB.dbo.vwTask' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwTask">
+          <Key>
+            <PropertyRef Name="UTID" />
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="TaskID" />
+            <PropertyRef Name="TaskName" />
+            <PropertyRef Name="CreateDate" />
+            <PropertyRef Name="Status" />
+            <PropertyRef Name="StatusTitle" />
+          </Key>
+          <Property Name="UTID" Type="bigint" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="TaskID" Type="bigint" Nullable="false" />
+          <Property Name="TaskName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="Status" Type="smallint" Nullable="false" />
+          <Property Name="StatusTitle" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_LogUserLogin_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="LogUserLogin" Type="Self.LogUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="LogUserLogin">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Task_BaseInfo">
+          <End Role="BaseInfo" Type="Self.BaseInfo" Multiplicity="1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseInfo">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTasks_Task">
+          <End Role="Task" Type="Self.Task" Multiplicity="1" />
+          <End Role="UserTasks" Type="Self.UserTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="TaskID" />
+            </Principal>
+            <Dependent Role="UserTasks">
+              <PropertyRef Name="TaskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTasks_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserTasks" Type="Self.UserTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserTasks">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PardisDBModelStoreContainer">
+          <EntitySet Name="BaseInfo" EntityType="Self.BaseInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LogUserLogin" EntityType="Self.LogUserLogin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sliders" EntityType="Self.Sliders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserTasks" EntityType="Self.UserTasks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwTask" EntityType="Self.vwTask" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwTask].[UTID] AS [UTID], 
+    [vwTask].[UserID] AS [UserID], 
+    [vwTask].[UserName] AS [UserName], 
+    [vwTask].[TaskID] AS [TaskID], 
+    [vwTask].[TaskName] AS [TaskName], 
+    [vwTask].[CreateDate] AS [CreateDate], 
+    [vwTask].[Status] AS [Status], 
+    [vwTask].[StatusTitle] AS [StatusTitle], 
+    [vwTask].[StartDate] AS [StartDate], 
+    [vwTask].[EndDate] AS [EndDate]
+    FROM [dbo].[vwTask] AS [vwTask]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_LogUserLogin_Users" Association="Self.FK_LogUserLogin_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="LogUserLogin" EntitySet="LogUserLogin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Task_BaseInfo" Association="Self.FK_Task_BaseInfo">
+            <End Role="BaseInfo" EntitySet="BaseInfo" />
+            <End Role="Task" EntitySet="Task" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTasks_Task" Association="Self.FK_UserTasks_Task">
+            <End Role="Task" EntitySet="Task" />
+            <End Role="UserTasks" EntitySet="UserTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTasks_Users" Association="Self.FK_UserTasks_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserTasks" EntitySet="UserTasks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PardisDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="UserTasks" Relationship="PardisDBModel.FK_UserTasks_Users" FromRole="Users" ToRole="UserTasks" />
+          <NavigationProperty Name="LogUserLogin" Relationship="PardisDBModel.FK_LogUserLogin_Users" FromRole="Users" ToRole="LogUserLogin" />
+        </EntityType>
+        <EntityContainer Name="PardisDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="Sliders" EntityType="PardisDBModel.Sliders" />
+          <EntitySet Name="Task" EntityType="PardisDBModel.Task" />
+          <EntitySet Name="BaseInfo" EntityType="PardisDBModel.BaseInfo" />
+          <EntitySet Name="UserTasks" EntityType="PardisDBModel.UserTasks" />
+          <EntitySet Name="vwTask" EntityType="PardisDBModel.vwTask" />
+          <AssociationSet Name="FK_Task_BaseInfo" Association="PardisDBModel.FK_Task_BaseInfo">
+            <End Role="BaseInfo" EntitySet="BaseInfo" />
+            <End Role="Task" EntitySet="Task" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTasks_Task" Association="PardisDBModel.FK_UserTasks_Task">
+            <End Role="Task" EntitySet="Task" />
+            <End Role="UserTasks" EntitySet="UserTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTasks_Users" Association="PardisDBModel.FK_UserTasks_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserTasks" EntitySet="UserTasks" />
+          </AssociationSet>
+          <EntitySet Name="LogUserLogin" EntityType="PardisDBModel.LogUserLogin" />
+          <AssociationSet Name="FK_LogUserLogin_Users" Association="PardisDBModel.FK_LogUserLogin_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="LogUserLogin" EntitySet="LogUserLogin" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Sliders">
+          <Key>
+            <PropertyRef Name="SlideID" />
+          </Key>
+          <Property Name="SlideID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SlideName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="SlideLink" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ImageName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ClassName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="TaskID" />
+          </Key>
+          <Property Name="TaskID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Status" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="BaseInfo" Relationship="PardisDBModel.FK_Task_BaseInfo" FromRole="Task" ToRole="BaseInfo" />
+          <NavigationProperty Name="UserTasks" Relationship="PardisDBModel.FK_UserTasks_Task" FromRole="Task" ToRole="UserTasks" />
+        </EntityType>
+        <EntityType Name="BaseInfo">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="Int16" Nullable="false" />
+          <Property Name="StatusTitle" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Task" Relationship="PardisDBModel.FK_Task_BaseInfo" FromRole="BaseInfo" ToRole="Task" />
+        </EntityType>
+        <EntityType Name="UserTasks">
+          <Key>
+            <PropertyRef Name="UTID" />
+          </Key>
+          <Property Name="UTID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="TaskID" Type="Int64" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Task" Relationship="PardisDBModel.FK_UserTasks_Task" FromRole="UserTasks" ToRole="Task" />
+          <NavigationProperty Name="Users" Relationship="PardisDBModel.FK_UserTasks_Users" FromRole="UserTasks" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="vwTask">
+          <Key>
+            <PropertyRef Name="UTID" />
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="TaskID" />
+            <PropertyRef Name="TaskName" />
+            <PropertyRef Name="CreateDate" />
+            <PropertyRef Name="Status" />
+            <PropertyRef Name="StatusTitle" />
+          </Key>
+          <Property Name="UTID" Type="Int64" Nullable="false" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="TaskID" Type="Int64" Nullable="false" />
+          <Property Name="TaskName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Status" Type="Int16" Nullable="false" />
+          <Property Name="StatusTitle" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_Task_BaseInfo">
+          <End Type="PardisDBModel.BaseInfo" Role="BaseInfo" Multiplicity="1" />
+          <End Type="PardisDBModel.Task" Role="Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseInfo">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTasks_Task">
+          <End Type="PardisDBModel.Task" Role="Task" Multiplicity="1" />
+          <End Type="PardisDBModel.UserTasks" Role="UserTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="TaskID" />
+            </Principal>
+            <Dependent Role="UserTasks">
+              <PropertyRef Name="TaskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTasks_Users">
+          <End Type="PardisDBModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="PardisDBModel.UserTasks" Role="UserTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserTasks">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="LogUserLogin">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="LogDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Status" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="PardisDBModel.FK_LogUserLogin_Users" FromRole="LogUserLogin" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_LogUserLogin_Users">
+          <End Type="PardisDBModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="PardisDBModel.LogUserLogin" Role="LogUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="LogUserLogin">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PardisDBModelStoreContainer" CdmEntityContainer="PardisDBEntities">
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="PardisDBModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sliders">
+            <EntityTypeMapping TypeName="PardisDBModel.Sliders">
+              <MappingFragment StoreEntitySet="Sliders">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+                <ScalarProperty Name="SlideLink" ColumnName="SlideLink" />
+                <ScalarProperty Name="SlideName" ColumnName="SlideName" />
+                <ScalarProperty Name="SlideID" ColumnName="SlideID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Task">
+            <EntityTypeMapping TypeName="PardisDBModel.Task">
+              <MappingFragment StoreEntitySet="Task">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BaseInfo">
+            <EntityTypeMapping TypeName="PardisDBModel.BaseInfo">
+              <MappingFragment StoreEntitySet="BaseInfo">
+                <ScalarProperty Name="StatusTitle" ColumnName="StatusTitle" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTasks">
+            <EntityTypeMapping TypeName="PardisDBModel.UserTasks">
+              <MappingFragment StoreEntitySet="UserTasks">
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UTID" ColumnName="UTID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwTask">
+            <EntityTypeMapping TypeName="PardisDBModel.vwTask">
+              <MappingFragment StoreEntitySet="vwTask">
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="StatusTitle" ColumnName="StatusTitle" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UTID" ColumnName="UTID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LogUserLogin">
+            <EntityTypeMapping TypeName="PardisDBModel.LogUserLogin">
+              <MappingFragment StoreEntitySet="LogUserLogin">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

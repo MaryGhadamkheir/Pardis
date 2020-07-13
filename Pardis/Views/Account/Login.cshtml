@@ -1,0 +1,77 @@
+﻿@model DataLayer.Users
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link href="/Content/Site.css" rel="stylesheet" />
+    <link href="/Content/bootstrap-rtl.css" rel="stylesheet" />
+</head>
+<body style="padding:0px;">
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+    @using (Html.BeginForm())
+    {
+    @Html.AntiForgeryToken()
+
+    <div class="login">
+        <div class="loginContainer">
+            <div class="wraplogin">
+                <div class="loginFormTitle" style="background-image:url(../../Images/bg-01.jpg); ">
+                </div>
+
+                <form class="loginForm validate-form">
+                    <div class="wrapInput validateInput" style="margin-top: 30px;" data-validate="Username is required">
+                        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control inputlogin", placeholder="نام کاربری" } })
+                        <span class="inputFocus"></span>
+                    </div>
+                    <div class="wrapInput validateInput" data-validate="Username is required">
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control inputlogin", placeholder="رمز عبور", type="password" } })
+                        <span class="inputFocus"></span>
+                    </div>
+                    <div class="form-group" style="text-align: center; margin-top: 20px;">
+                        <div>
+                            <input type="submit" value="ورود" class="btn btn-default" style="width: 280px;background-color: #96b4ce; border: 1px solid #304e68;" />
+                        </div>
+                    </div>
+                    <div style="text-align:center;">
+                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                    <div style="direction: rtl; text-align: center; margin-top: 30px; font-weight: normal; font-size: 13px; margin-bottom: 30px;">
+                        <div>
+                            <input type="checkbox" name="remember-me">
+                            <label>
+                                مرا بخاطر بسپار!
+                            </label>
+                        </div>
+
+                        <div>
+                            <a href="#" class="txt1">
+                                فراموشی رمز عبور ؟
+                            </a>
+                        </div>
+                    </div>
+
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    }
+
+</body>
+</html>
