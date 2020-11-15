@@ -1,0 +1,42 @@
+﻿@model IEnumerable<DataLayer.vwMenuGroup>
+
+@if (ViewBag.ErrorGetMenu) {
+    <span>در بدست آوردن منوهای قابل دسترسی توسط کاربر خطایی رخ داده است !</span>
+}
+else if (ViewBag.NoAccess)
+{
+    <span>کاربر گرامی شما فاقد دسترسی در سامانه می باشید !</span>
+}
+else
+{
+    if (Model.Any())
+    {
+        <ul>
+            @foreach (var item in Model)
+            {
+                if (item.ParentID == 0)
+                {
+                    <li class="active">
+                        <a href="#Menu_@item.ID" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">@item.Title</a>
+                        <ul class="collapse list-unstyled" id="Menu_@item.ID">
+                            @foreach (var subitem in Model.Where(q => q.ParentID == item.ID))
+                            {
+                                <li>
+                                    @if (@HttpContext.Current.Session["SelectedMenuID"].ToString() == subitem.ID.ToString())
+                                    {
+                                        <a style="background-color: black;color: white;" href="/Requests/GetViewPathByMenuID/@subitem.ID">@subitem.Title</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/Requests/GetViewPathByMenuID/@subitem.ID">@subitem.Title</a>
+                                    }
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+            }
+        </ul>
+    }
+}
+

@@ -4,18 +4,39 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d4bdc5a52c0c482ba3c5f9a7dec034ab" Name="Diagram1">
-        <EntityTypeShape EntityType="PardisDBModel.Users" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PardisDBModel.Sliders" Width="1.5" PointX="4.375" PointY="0.5" />
-        <EntityTypeShape EntityType="PardisDBModel.Task" Width="1.5" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="PardisDBModel.BaseInfo" Width="1.5" PointX="4" PointY="5.875" />
-        <EntityTypeShape EntityType="PardisDBModel.UserTasks" Width="1.5" PointX="4" PointY="3.25" />
-        <EntityTypeShape EntityType="PardisDBModel.vwTask" Width="1.5" PointX="6.25" PointY="0.5" />
+      <Diagram DiagramId="d4bdc5a52c0c482ba3c5f9a7dec034ab" Name="Diagram1" ZoomLevel="83">
+        <EntityTypeShape EntityType="PardisDBModel.Users" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="PardisDBModel.Sliders" Width="2" PointX="10.75" PointY="3.25" IsExpanded="false" />
+        <EntityTypeShape EntityType="PardisDBModel.Task" Width="1.5" PointX="0.5" PointY="1.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="PardisDBModel.BaseInfo" Width="1.5" PointX="3.5" PointY="2.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="PardisDBModel.UserTasks" Width="1.5" PointX="3.25" PointY="0.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="PardisDBModel.vwTask" Width="2.125" PointX="10.75" PointY="0.625" IsExpanded="false" />
         <AssociationConnector Association="PardisDBModel.FK_Task_BaseInfo" />
         <AssociationConnector Association="PardisDBModel.FK_UserTasks_Task" />
         <AssociationConnector Association="PardisDBModel.FK_UserTasks_Users" />
-        <EntityTypeShape EntityType="PardisDBModel.LogUserLogin" Width="1.5" PointX="6.25" PointY="4" />
+        <EntityTypeShape EntityType="PardisDBModel.LogUserLogin" Width="1.5" PointX="5.375" PointY="0.5" IsExpanded="false" />
         <AssociationConnector Association="PardisDBModel.FK_LogUserLogin_Users" />
+        <EntityTypeShape EntityType="PardisDBModel.Groups" Width="1.875" PointX="0.625" PointY="3.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="PardisDBModel.Menus" Width="2.625" PointX="4.125" PointY="3.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="PardisDBModel.MenusGroup" Width="2.625" PointX="4.125" PointY="3.625" IsExpanded="false" />
+        <EntityTypeShape EntityType="PardisDBModel.Nodes" Width="2" PointX="10.75" PointY="3.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="PardisDBModel.UserGroups" Width="1.875" PointX="0.625" PointY="3" IsExpanded="false" />
+        <EntityTypeShape EntityType="PardisDBModel.WFActivity" Width="2" PointX="10.75" PointY="6.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="PardisDBModel.WFAssignments" Width="2" PointX="10.75" PointY="5.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="PardisDBModel.Workflows" Width="2" PointX="10.75" PointY="5.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="PardisDBModel.vwMenuGroup" Width="2.375" PointX="13.125" PointY="1.125" IsExpanded="false" />
+        <EntityTypeShape EntityType="PardisDBModel.vwUserGroups" Width="2.375" PointX="13.125" PointY="0.625" IsExpanded="false" />
+        <AssociationConnector Association="PardisDBModel.FK_MenusGroup_Groups" />
+        <AssociationConnector Association="PardisDBModel.FK_UserGroups_Groups" />
+        <AssociationConnector Association="PardisDBModel.FK_MenusGroup_Menus" />
+        <AssociationConnector Association="PardisDBModel.FK_UserGroups_Users" />
+        <EntityTypeShape EntityType="PardisDBModel.tbl_needs" Width="2.125" PointX="0.75" PointY="4.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="PardisDBModel.tbl_profiles" Width="2.125" PointX="0.75" PointY="5.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="PardisDBModel.Requests" Width="2" PointX="10.75" PointY="4.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="PardisDBModel.SupplyEquipments" Width="2.625" PointX="4.125" PointY="4.75" IsExpanded="false" />
+        <AssociationConnector Association="PardisDBModel.FK_SupplyEquipments_tbl_needs" />
+        <AssociationConnector Association="PardisDBModel.FK_SupplyEquipments_tbl_profiles" />
+        <EntityTypeShape EntityType="PardisDBModel.vwRequestNodeStatus" Width="2.125" PointX="10.75" PointY="1.125" IsExpanded="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -72,7 +72,7 @@ namespace Pardis.Controllers
                     db.LogUserLogin.Add(objlog);
                     db.SaveChanges();
                 }
-                catch(Exception ex) { }
+                catch { }
             }
         }
 

@@ -54,7 +54,22 @@
     <Compile Include="BaseInfo.cs">
       <DependentUpon>PardisModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Enums.cs" />
+    <Compile Include="Groups.cs">
+      <DependentUpon>PardisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PardisFacadeController.cs" />
+    <Compile Include="ViewModels\KeyPairValueViewModel.cs" />
     <Compile Include="LogUserLogin.cs">
+      <DependentUpon>PardisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Menus.cs">
+      <DependentUpon>PardisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MenusGroup.cs">
+      <DependentUpon>PardisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Nodes.cs">
       <DependentUpon>PardisModel.tt</DependentUpon>
     </Compile>
     <Compile Include="PardisModel.Context.cs">
@@ -73,10 +88,25 @@
       <DependentUpon>PardisModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests.cs">
+      <DependentUpon>PardisModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Sliders.cs">
       <DependentUpon>PardisModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="SupplyEquipments.cs">
+      <DependentUpon>PardisModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Task.cs">
+      <DependentUpon>PardisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_needs.cs">
+      <DependentUpon>PardisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_profiles.cs">
+      <DependentUpon>PardisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserGroups.cs">
       <DependentUpon>PardisModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Users.cs">
@@ -86,7 +116,27 @@
       <DependentUpon>PardisModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UserTaskViewModel.cs" />
+    <Compile Include="ViewModels\SupplyEquipmentViewModel.cs" />
+    <Compile Include="vwMenuGroup.cs">
+      <DependentUpon>PardisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwRequestNodeStatus.cs">
+      <DependentUpon>PardisModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="vwTask.cs">
+      <DependentUpon>PardisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="vwUserGroups.cs">
+      <DependentUpon>PardisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WFActivity.cs">
+      <DependentUpon>PardisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WFAssignments.cs">
+      <DependentUpon>PardisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WorkFlowController.cs" />
+    <Compile Include="Workflows.cs">
       <DependentUpon>PardisModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -118,6 +168,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -30,7 +30,7 @@ namespace Pardis.Controllers
                 };
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception ex)
+            catch 
             {
                 var result = new
                 {
@@ -101,7 +101,7 @@ namespace Pardis.Controllers
                 };
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception ex) {
+            catch {
                 var result = new
                 {
                     taskList = new List<UserTaskViewModel>(),

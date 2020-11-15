@@ -1,0 +1,432 @@
+﻿
+<div data-bind="with: DetailViewModel" class="card">
+    <div class="card-header">
+        <h5>ثبت درخواست تامین </h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-12">
+                <label for="lblFullName" class="control-label">مشتری :</label>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <select id="drpProfiles" class="form-control"
+                     data-bind="options: AllProfilesList, optionsText: 'Value', optionsValue: 'Key', value: SelectedProfileID,
+                                 event: { change: drpProfiles_SelectedChage }"></select>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-12">
+                <label for="lblEmail" class="control-label">نیازسنجی :</label>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <select id="drpNeeds" class="form-control"
+                        data-bind="options: ProfileNeedsList, optionsText: 'Value', optionsValue: 'Key', value: SelectedNeedId"></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-12">
+                <label for="lblSERequestTitle" class="control-label">عنوان درخواست :</label>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <input type="text" name="txtSERequestTitle" class="form-control" data-bind="textInput: SE_RequestTitle">
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-12">
+                <label for="lblSERequestType" class="control-label">نوع درخواست :</label>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <select id="drpSERequestType" class="form-control"
+                        data-bind="options: AllSERequestTypeList, optionsText: 'Value', optionsValue: 'Key', value: SelectedSERequestID"></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-12">
+                <label for="lblPriceAnnouncementDeadline" class="control-label">مهلت اعلام قیمت :</label>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <input type="text" placeholder="xxxx/xx/xx" name="txtPriceAnnouncementDeadline" class="form-control" data-bind="textInput: PriceAnnouncementDeadline" >
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-12">
+                <label for="lblDeliveryDeadline" class="control-label">مهلت تحویل :</label>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <input type="text" placeholder="xxxx/xx/xx" name="txtDeliveryDeadline" class="form-control" data-bind="textInput: DeliveryDeadline" >
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-12">
+                <label for="lblWarrantyTerms" class="control-label">شرایط گارانتی :</label>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <textarea id="txtWarrantyTerms" data-bind="value: WarrantyTerms"></textarea>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-12">
+                <label for="lblDescription" class="control-label">توضیحات :</label>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <textarea id="txtDescription" data-bind="value: Description"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="row">
+            <div class="col-6">
+                <div>
+                    <span></span>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="d-flex justify-content-end">
+                    <button id="btnCancel" type="button" name="btnCancel"
+                            class="btn btn-red btn-sm" style="margin-right: 5px;" (click)="btnCancel_Click">
+                        <i class="fa fa-edit"></i>&nbsp;&nbsp;<span>انصراف</span>
+                    </button>
+                    <button id="submit" type="button" value="Submit" class="btn btn-success btn-sm" data-bind="click: btn_Save" >
+                        <i class="fa fa-save"></i>&nbsp;&nbsp;<span>ثبت</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <label id="lblActivityDescription">شرح اقدام :</label>
+            </div>
+            <div class="col-12">
+                <textarea id="txtActivityDescription" style="width: 100%; height: 100px;" data-bind="value: ActivityDescription"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-end">
+                    <button id="btnConfirm" type="button" class="btn btn-success btn-sm" data-bind="click: btn_Confirm">
+                        <i class="fa fa-save"></i>&nbsp;&nbsp;<span>ثبت و ارسال </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script{
+    <script>
+
+        try {
+            var TotalViewModel = {
+                DetailViewModel: ko.observable(null),
+            }
+            $(document).ready(function () {
+                function vm() {
+                    var self = this;
+                    self.ID = ko.observable(0);
+                    self.SE_RequestTitle = ko.observable('');
+                    self.PriceAnnouncementDeadline = ko.observable('');
+                    self.DeliveryDeadline = ko.observable('');
+                    self.WarrantyTerms = ko.observable('');
+                    self.Description = ko.observable('');
+                    /*Profiles & Needs============================*/
+                    {
+                        self.AllProfilesList = ko.observableArray([]);
+                        self.SelectedProfileID = ko.observable(0);
+                        self.ProfileNeedsList = ko.observableArray([]);
+                        self.SelectedNeedId = ko.observable(0);
+
+                        self.getAllProfiles = function (keyName, backFunc) {
+                            $.ajax({
+                                type: "POST",
+                                async: true,
+                                contentType: 'application/json; charset=utf-8',
+                                url: '/SupplyEquipmentWorkFlow/GetAllProfiles',
+                                success: function (rs) {
+                                    if (rs.successful) {
+                                        backFunc({
+                                            key: keyName,
+                                            ok: true,
+                                            lstProfiles: rs.profileList,
+                                            errorString: rs.ErrorMessage
+                                        });
+                                    }
+                                    else {
+                                        backFunc({
+                                            key: keyName,
+                                            ok: false,
+                                            lstProfiles: rs.profileList,
+                                            errorString: rs.ErrorMessage
+                                        });
+                                    }
+
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    backFunc({
+                                        key: keyName,
+                                        ok: false,
+                                        lstProfiles: null,
+                                        errorString: 'خطا در فراخوانی متد بدست آوردن لیست مشتریان موجود !'
+                                    });
+                                }
+                            })
+                        }
+                        self.drpProfiles_SelectedChage = function () {
+                            $.ajax({
+                                type: "POST",
+                                async: true,
+                                contentType: 'application/json; charset=utf-8',
+                                url: '/SupplyEquipmentWorkFlow/GetNeedsByprofileID',
+                                data: ko.toJSON({
+                                    profileId: self.SelectedProfileID(),
+                                }),
+                                success: function (rs) {
+                                    if (rs.successful) {
+                                        afterExecuteMainPageMethod({
+                                            key: 'afterGetNeedsProfile',
+                                            ok: true,
+                                            lstneeds: rs.needList,
+                                            errorString: rs.ErrorMessage
+                                        });
+                                    }
+                                    else {
+                                        afterExecuteMainPageMethod({
+                                            key: 'afterGetNeedsProfile',
+                                            ok: false,
+                                            lstneeds: rs.needList,
+                                            errorString: rs.ErrorMessage
+                                        });
+                                    }
+
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    afterExecuteMainPageMethod({
+                                        key: 'afterGetNeedsProfile',
+                                        ok: false,
+                                        lstneeds: null,
+                                        errorString: 'خطا در فراخوانی متد بدست آوردن لیست نیازسنجی های مشتری انتخاب شده !'
+                                    });
+                                }
+                            })
+                        }
+                    }
+                    /*RequestType=================================*/
+                    {
+                        self.AllSERequestTypeList = ko.observableArray([]);
+                        self.SelectedSERequestID = ko.observable(0);
+                        self.getAllSupplyEquipmentRequestTypes = function (keyName, backFunc) {
+                            $.ajax({
+                                type: "POST",
+                                async: true,
+                                contentType: 'application/json; charset=utf-8',
+                                url: '/SupplyEquipmentWorkFlow/GetSupplyEquipmentRequestTypes',
+                                success: function (rs) {
+                                    if (rs.successful) {
+                                        backFunc({
+                                            key: keyName,
+                                            ok: true,
+                                            lstReqType: rs.ReqTypeList,
+                                            errorString: rs.ErrorMessage
+                                        });
+                                    }
+                                    else {
+                                        backFunc({
+                                            key: keyName,
+                                            ok: false,
+                                            lstReqType: rs.ReqTypeList,
+                                            errorString: rs.ErrorMessage
+                                        });
+                                    }
+
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    backFunc({
+                                        key: keyName,
+                                        ok: false,
+                                        lstReqType: null,
+                                        errorString: 'خطا در فراخوانی متد بدست آوردن نوع درخواست مشتری !'
+                                    });
+                                }
+                            })
+                        }
+                    }
+                    /*Actions=====================================*/
+                    {
+                        self.ActivityDescription = ko.observable('');
+                        self.validationForm = function () {
+                            var flag = true;
+                            var error = '';
+                            if (self.SelectedProfileID() == 0) {
+                                flag = false;
+                            }
+                            if (self.SelectedNeedId() == undefined || self.SelectedNeedId() == 0) {
+                                flag = false;
+                            }
+                            if (self.PriceAnnouncementDeadline() == '') {
+                                flag = false;
+                            }
+                            if (self.DeliveryDeadline() == '') {
+                                flag = false;
+                            }
+                            return flag;
+                        }
+                        self.Save = function (confirmReq, keyName, backFunc) {
+                            if (self.validationForm()) {
+                                var objSupplyEquipment = {
+                                    id: self.ID(),
+                                    requestId: 0,
+                                    profileId: self.SelectedProfileID(),
+                                    needId: self.SelectedNeedId(),
+                                    requestTitle: self.SE_RequestTitle(),
+                                    faPriceAnnouncementDeadline: self.PriceAnnouncementDeadline(),
+                                    fadeliveryDeadline: self.DeliveryDeadline(),
+                                    requestTypeID: self.SelectedSERequestID(),
+                                    warrantyTerms: self.WarrantyTerms(),
+                                    Description: self.Description()
+                                }
+                                $.ajax({
+                                    type: "POST",
+                                    async: true,
+                                    contentType: 'application/json; charset=utf-8',
+                                    url: '/SupplyEquipmentWorkFlow/SaveSupplyEquipment',
+                                    data: ko.toJSON({
+                                        objSE: objSupplyEquipment,
+                                        activityDesc: self.ActivityDescription(),
+                                        isSendRequest: confirmReq
+                                    }),
+                                    success: function (rs) {
+                                        if (rs.successful) {
+                                            backFunc({
+                                                key: keyName,
+                                                ok: true,
+                                                errorString: rs.ErrorMessage,
+                                                ReqID: rs.RequestID
+                                            });
+                                        }
+                                        else {
+                                            backFunc({
+                                                key: keyName,
+                                                ok: false,
+                                                errorString: rs.ErrorMessage,
+                                                ReqID: rs.RequestID
+                                            });
+                                        }
+
+                                    },
+                                    error: function (jqXHR, textStatus, errorThrown) {
+                                        debugger;
+                                        backFunc({
+                                            key: keyName,
+                                            ok: false,
+                                            errorString: 'خطا در فراخوانی متد ثبت اطلاعات درخواست تامین  !',
+                                            ReqID: 0
+                                        });
+                                    }
+                                });
+                            }
+                            else {
+                                alert('لطفا تمامی موارد ستاره دار را تکمیل نمایید !');
+                            }
+                        }
+                        self.btn_Save = function () {
+                            self.Save(false, 'afterSave', afterExecuteMainPageMethod);
+                        }
+                        self.btn_Confirm = function() {
+                            self.Save(true, 'afterSave', afterExecuteMainPageMethod);
+                        }
+                    }
+                    /*======Page Load============================*/
+                    {
+                        function afterExecuteMainPageMethod(data) {
+                            switch (data.key) {
+                                case 'afterGetAllProfiles':
+                                    {
+                                        self.AllProfilesList([]);
+                                        self.SelectedProfileID();
+                                        if (data.ok) {
+                                            if (data.lstProfiles != null) {
+                                                var select = {
+                                                    Key: 0,
+                                                    Value: '--- انتخاب نمایید---'
+                                                };
+                                                self.AllProfilesList.push(select);
+                                                for (var i = 0; i < data.lstProfiles.length; i++) {
+                                                    self.AllProfilesList.push(data.lstProfiles[i]);
+                                                }
+                                                self.SelectedProfileID(0);
+                                            }
+                                        }
+                                        else {
+                                            alert(data.errorString);
+                                        }
+                                        self.getAllSupplyEquipmentRequestTypes('afterGetSERequestTypes', afterExecuteMainPageMethod);
+                                    }
+                                    break;
+                                case 'afterGetNeedsProfile':
+                                    {
+                                        self.ProfileNeedsList([]);
+                                        self.SelectedNeedId();
+                                        if (data.ok) {
+                                            if (data.lstneeds != null) {
+                                                var select = {
+                                                    Key: 0,
+                                                    Value: '--- انتخاب نمایید---'
+                                                };
+                                                self.ProfileNeedsList.push(select);
+                                                for (var i = 0; i < data.lstneeds.length; i++) {
+                                                    self.ProfileNeedsList.push(data.lstneeds[i]);
+                                                }
+                                                self.SelectedNeedId(0);
+                                            }
+                                        }
+                                        else {
+                                            alert(data.errorString);
+                                        }
+                                    }
+                                    break;
+                                case 'afterGetSERequestTypes':
+                                    {
+                                        self.AllSERequestTypeList([]);
+                                        self.SelectedSERequestID();
+                                        if (data.ok) {
+                                            if (data.lstReqType != null) {
+                                                var select = {
+                                                    Key: 0,
+                                                    Value: '--- انتخاب نمایید---'
+                                                };
+                                                self.AllSERequestTypeList.push(select);
+                                                for (var i = 0; i < data.lstReqType.length; i++) {
+                                                    self.AllSERequestTypeList.push(data.lstReqType[i]);
+                                                }
+                                                self.SelectedSERequestID(0);
+                                            }
+                                        }
+                                        else {
+                                            alert(data.errorString);
+                                        }
+                                    }
+                                    break;
+                                case 'afterSave':
+                                    {
+                                        if (data.ok) {
+                                            alert('ثبت با موفقیت انجام شد !');
+                                        }
+                                        else {
+                                            alert(data.errorString);
+                                        }
+                                    }
+                                    break;
+                            }
+                        }
+
+                        self.pageLoad = function () {
+                            self.getAllProfiles('afterGetAllProfiles', afterExecuteMainPageMethod);
+                        }
+                        self.pageLoad();
+                    }
+                }
+                TotalViewModel.DetailViewModel(vm);
+                ko.applyBindings(TotalViewModel);
+            })
+        } catch (error) {
+            alert(error.message);
+        }
+
+    </script>
+
+}

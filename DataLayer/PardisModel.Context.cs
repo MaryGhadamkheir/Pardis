@@ -32,5 +32,20 @@ namespace DataLayer
         public virtual DbSet<UserTasks> UserTasks { get; set; }
         public virtual DbSet<vwTask> vwTask { get; set; }
         public virtual DbSet<LogUserLogin> LogUserLogin { get; set; }
+        public virtual DbSet<Groups> Groups { get; set; }
+        public virtual DbSet<Menus> Menus { get; set; }
+        public virtual DbSet<MenusGroup> MenusGroup { get; set; }
+        public virtual DbSet<Nodes> Nodes { get; set; }
+        public virtual DbSet<UserGroups> UserGroups { get; set; }
+        public virtual DbSet<WFActivity> WFActivity { get; set; }
+        public virtual DbSet<WFAssignments> WFAssignments { get; set; }
+        public virtual DbSet<Workflows> Workflows { get; set; }
+        public virtual DbSet<vwMenuGroup> vwMenuGroup { get; set; }
+        public virtual DbSet<vwUserGroups> vwUserGroups { get; set; }
+        public virtual DbSet<tbl_needs> tbl_needs { get; set; }
+        public virtual DbSet<tbl_profiles> tbl_profiles { get; set; }
+        public virtual DbSet<Requests> Requests { get; set; }
+        public virtual DbSet<SupplyEquipments> SupplyEquipments { get; set; }
+        public virtual DbSet<vwRequestNodeStatus> vwRequestNodeStatus { get; set; }
     }
 }

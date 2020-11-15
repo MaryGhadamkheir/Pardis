@@ -1,0 +1,154 @@
+﻿@model IEnumerable<DataLayer.vwRequestNodeStatus>
+
+<div class="card">
+    <div class="card-header">
+        <span>جستجو</span>
+    </div>
+    <div class="card-body">
+        <h2>Filtering Items </h2>
+    </div>
+    <div class="card-footer">
+        <input id="btnFilterCardtable" type="button" value="جستجو" class="btn btn-success btn-sm floatLeftItems" style="width: 120px;" />
+        @if (HttpContext.Current.Session["IsFirstNodeId"].ToString() == "1")
+        {
+            @*<input id="btnRegisterRequest" type="button" value="ثبت درخواست جدید" class="btn btn-success btn-sm floatLeftItems"
+                 style="width: 120px;" onclick="ShowView();" />*@
+            <a href="/Requests/RegisterNewRequest" id="btnRegisterRequest" class="btn btn-success btn-sm floatLeftItems"
+                 style="width: 120px;">
+                <span>ثبت درخواست جدید</span>
+            </a>
+        }
+    </div>
+</div>
+<br />
+<div class="card mgt-10" >
+    <div class="card-header">
+        Number per Page
+    </div>
+    <div class="card-body mgt-10">
+        @if (Model.Any())
+        {
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <td><span>&nbsp;</span></td>
+                        <td><span>شماره درخواست</span></td>
+                        <td><span>پروفایل</span></td>
+                        <td><span>عنوان</span></td>
+                        <td><span>مهلت اعلام قیمت </span></td>
+                        <td><span>درخواست کننده</span></td>
+                        <td><span>تاریخ ثبت درخواست</span></td>
+                        <td><span>مهلت تحویل</span></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model) {
+                        <tr>
+                            <td>
+                                <button id="btn" type="button">
+                                    <i class="fa fa-select"></i>
+                                </button>
+                            </td>
+                            <td>@item.RequestID</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>@item.UserAccount</td>
+                            <td>@item.RegDate</td>
+                            <td>test</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="nullgrid">
+                <span>هیچ درخواستی یافت نشد !</span>
+            </div>
+        }
+    </div>
+    <div class="card-footer">
+        Paging
+    </div>
+</div>
+
+@section script{
+    
+    <script type="text/javascript">
+
+        try {
+            var cardtableTotalViewModel = {
+                DetailViewModel: ko.observable(null),
+            }
+            $(document).ready(function () {
+                function vm() {
+                    var self = this;
+                    self.vwRequestNodeStatusList = ko.observableArray([]);
+                    self.isFirstNode = ko.observable(false);
+                    self.WorkFlowType = ko.observable(0);
+                    /*======Methods============================*/
+                    self.getCardTableInfo = function() {
+                        $.ajax({
+                            type: "POST",
+                            async: false,
+                            cache: false,
+                            context: document.body,
+                            url: '/Requests/GetCartableInfoByNodeId/' + @Model,
+                            success: function (res) {
+                                afterExecuteMethod({
+                                    key: 'AfterGetCardTableInfo',
+                                    ok: true,
+                                    RequestError: res.RequestError,
+                                    RequestList: res.RequestList,
+                                    FirstNodeError: res.FirstNodeError,
+                                    IsFirstWorkFlowNode: res.IsFirstNodeId,
+                                    WorkFlowTypeError: res.WorkFlowError,
+                                    WorkFlowType: res.WorkFlowType
+                                });
+                            },
+                            error: function (xhr) {
+                                afterExecuteMethod({
+                                    key: 'AfterGetCardTableInfo',
+                                    ok: false,
+                                    RequestError: res.RequestError,
+                                    RequestList: res.RequestList,
+                                    FirstNodeError: res.FirstNodeError,
+                                    IsFirstWorkFlowNode: res.IsFirstNodeId,
+                                    WorkFlowTypeError: res.WorkFlowError,
+                                    WorkFlowType: res.WorkFlowType
+                                });
+                            }
+                        });
+                    }
+                    /*======Page Load============================*/
+                    function afterExecuteMethod(data) {
+                        switch (data.key) {
+                            case 'AfterGetCardTableInfo':
+                                if (data.ok) {
+
+                                }
+                                else {
+                                    alert(data.errorString);
+                                }
+                                break;
+                        }
+                    }
+
+                    self.pageLoad = function () {
+                    
+                    }
+                    self.pageLoad();
+                }
+                cardtableTotalViewModel.DetailViewModel(vm);
+                ko.applyBindings(cardtableTotalViewModel);
+            })
+        } catch (error) {
+            alert(error.message);
+        }
+
+
+
+    </script>
+
+}

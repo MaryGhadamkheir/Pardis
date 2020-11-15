@@ -1,0 +1,79 @@
+﻿
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>Pardis</title>
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-rtl.css" rel="stylesheet" />
+
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/jquery-1.9.1.js"></script>
+
+    <script src="~/Scripts/bootstrap-rtl.js"></script>
+    <script src="~/Scripts/knockout-3.5.1.js"></script>
+
+</head>
+<body dir="rtl">
+    <div>
+        <div class="wrapper">
+            <!-- Sidebar Holder -->
+            <nav id="sidebar">
+                <div class="sidebar-header">
+                    <h3></h3>
+                </div>
+                <!-- Side Menu -->
+                @Html.Action("GetAllMenus", "Default")
+                <!-- End Side Menu -->
+            </nav>
+            <!-- Page Content Holder -->
+            <div id="content">
+                @*<nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container-fluid">
+                        <button type="button" id="sidebarCollapse" class="navbar-btn">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="fas fa-align-justify"></i>
+                        </button>
+                    </div>
+                </nav>*@
+
+                <div class="container-fluid bg-light h-100" style="box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); padding-top: 10px; ">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--=============Script================-->
+
+    @*<script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/jquery-1.9.1.js"></script>
+    <script src="~/Scripts/bootstrap-rtl.js"></script>
+    <script src="~/Scripts/knockout-3.5.1.js"></script>*@
+    <script type="text/javascript">
+        try {
+            
+            $(document).ready(function () {
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                    $(this).toggleClass('active');
+                });
+                
+            })
+        } catch (error) {
+            alert(error.message);
+        }
+
+    </script>
+
+    @RenderSection("script", required: false)
+
+</body>
+</html>

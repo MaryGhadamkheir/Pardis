@@ -12,6 +12,14 @@
           <Property Name="StatusID" Type="smallint" Nullable="false" />
           <Property Name="StatusTitle" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
+        <EntityType Name="Groups">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="LogUserLogin">
           <Key>
             <PropertyRef Name="LogID" />
@@ -20,6 +28,42 @@
           <Property Name="UserID" Type="bigint" Nullable="false" />
           <Property Name="LogDate" Type="datetime" Nullable="false" />
           <Property Name="Status" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Menus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="IsCartable" Type="bit" Nullable="false" />
+          <Property Name="NodeID" Type="int" Nullable="false" />
+          <Property Name="Path" Type="nvarchar" MaxLength="350" />
+        </EntityType>
+        <EntityType Name="MenusGroup">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MenuID" Type="int" Nullable="false" />
+          <Property Name="GroupID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nodes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Requests">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RegDate" Type="datetime" Nullable="false" />
+          <Property Name="UserAccount" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="RequestTypeID" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="Sliders">
           <Key>
@@ -32,6 +76,21 @@
           <Property Name="ClassName" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="SupplyEquipments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RequestID" Type="bigint" Nullable="false" />
+          <Property Name="ProfileID" Type="int" Nullable="false" />
+          <Property Name="NeedID" Type="int" Nullable="false" />
+          <Property Name="RequestTitle" Type="nvarchar" MaxLength="250" />
+          <Property Name="PriceAnnouncementDeadline" Type="datetime" Nullable="false" />
+          <Property Name="DeliveryDeadline" Type="datetime" Nullable="false" />
+          <Property Name="RequestTypeID" Type="smallint" />
+          <Property Name="WarrantyTerms" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Task">
           <Key>
             <PropertyRef Name="TaskID" />
@@ -40,6 +99,83 @@
           <Property Name="TaskName" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="Status" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_needs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar(max)" />
+          <Property Name="factorneed" Type="bit" />
+          <Property Name="factordate" Type="datetime" />
+          <Property Name="factorip" Type="nvarchar" MaxLength="50" />
+          <Property Name="factorby" Type="nvarchar" MaxLength="50" />
+          <Property Name="profileid" Type="int" />
+          <Property Name="catid" Type="int" />
+          <Property Name="subcatid" Type="nvarchar" MaxLength="50" />
+          <Property Name="sectorid" Type="int" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="status" Type="nvarchar(max)" />
+          <Property Name="confirmby" Type="nvarchar" MaxLength="50" />
+          <Property Name="confirmip" Type="nvarchar" MaxLength="50" />
+          <Property Name="confirmdate" Type="datetime" />
+          <Property Name="progress" Type="int" />
+          <Property Name="iscampaign" Type="bit" />
+          <Property Name="nexttime" Type="int" />
+          <Property Name="nextdates" Type="int" />
+          <Property Name="laststatusdesc" Type="nvarchar(max)" />
+          <Property Name="laststatusdescdates" Type="datetime" />
+          <Property Name="laststatusdescby" Type="nvarchar" MaxLength="50" />
+          <Property Name="toclnd" Type="datetime" />
+          <Property Name="price" Type="float" />
+          <Property Name="csproviderid" Type="int" />
+          <Property Name="editedby" Type="nvarchar" MaxLength="50" />
+          <Property Name="editedip" Type="nvarchar" MaxLength="50" />
+          <Property Name="editeddate" Type="datetime" />
+          <Property Name="userid" Type="int" />
+          <Property Name="assignby" Type="nvarchar(max)" />
+          <Property Name="assigndate" Type="datetime" />
+          <Property Name="departmentid" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_profiles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="isperson" Type="int" />
+          <Property Name="birthdate" Type="int" />
+          <Property Name="birthplace" Type="nvarchar" MaxLength="250" />
+          <Property Name="registerdate" Type="datetime" />
+          <Property Name="fathername" Type="nvarchar" MaxLength="250" />
+          <Property Name="name" Type="nvarchar(max)" />
+          <Property Name="uniquename" Type="nvarchar(max)" />
+          <Property Name="repname" Type="nvarchar(max)" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" />
+          <Property Name="code" Type="nvarchar" MaxLength="250" />
+          <Property Name="manager" Type="nvarchar" MaxLength="250" />
+          <Property Name="idnumber" Type="nvarchar" MaxLength="250" />
+          <Property Name="place" Type="nvarchar" MaxLength="250" />
+          <Property Name="edulevel" Type="int" />
+          <Property Name="edufield" Type="nvarchar" MaxLength="250" />
+          <Property Name="job" Type="nvarchar" MaxLength="250" />
+          <Property Name="country" Type="nvarchar" MaxLength="50" />
+          <Property Name="postalcode" Type="nvarchar" MaxLength="50" />
+          <Property Name="tel" Type="nvarchar(max)" />
+          <Property Name="address" Type="nvarchar(max)" />
+          <Property Name="comment" Type="nvarchar(max)" />
+          <Property Name="howyouknowid" Type="int" />
+          <Property Name="usergroup" Type="int" />
+          <Property Name="isProvider" Type="int" />
+          <Property Name="acccotactconfirm" Type="bit" />
+          <Property Name="iscampaign" Type="bit" />
+        </EntityType>
+        <EntityType Name="UserGroups">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="GroupID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -58,6 +194,106 @@
           <Property Name="TaskID" Type="bigint" Nullable="false" />
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="WFActivity">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PreActivityID" Type="bigint" Nullable="false" />
+          <Property Name="WorkFlowID" Type="smallint" Nullable="false" />
+          <Property Name="RequestID" Type="bigint" Nullable="false" />
+          <Property Name="FromNodeID" Type="int" Nullable="false" />
+          <Property Name="ToNodeID" Type="int" Nullable="false" />
+          <Property Name="StatusId" Type="smallint" Nullable="false" />
+          <Property Name="ActivityDate" Type="datetime" Nullable="false" />
+          <Property Name="UserAccount" Type="nvarchar" MaxLength="250" />
+          <Property Name="ToUserAccount" Type="nvarchar" MaxLength="250" />
+          <Property Name="GroupID" Type="int" Nullable="false" />
+          <Property Name="LogicalDelete" Type="bit" Nullable="false" />
+          <Property Name="ActivityDescription" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="WFAssignments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WorkFlowID" Type="smallint" Nullable="false" />
+          <Property Name="FromNodeID" Type="int" Nullable="false" />
+          <Property Name="ToNodeID" Type="int" Nullable="false" />
+          <Property Name="DoConfirm" Type="bit" Nullable="false" />
+          <Property Name="DoReject" Type="bit" Nullable="false" />
+          <Property Name="DoReturn" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Workflows">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="smallint" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="StartNodeID" Type="int" Nullable="false" />
+          <Property Name="EndNodeID" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PardisDB.dbo.vwMenuGroup' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwMenuGroup">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ParentID" />
+            <PropertyRef Name="Title" />
+            <PropertyRef Name="IsCartable" />
+            <PropertyRef Name="NodeID" />
+            <PropertyRef Name="GroupID" />
+            <PropertyRef Name="GroupTitle" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ParentID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="IsCartable" Type="bit" Nullable="false" />
+          <Property Name="NodeID" Type="int" Nullable="false" />
+          <Property Name="Path" Type="nvarchar" MaxLength="350" />
+          <Property Name="GroupID" Type="int" Nullable="false" />
+          <Property Name="GroupTitle" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PardisDB.dbo.vwRequestNodeStatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwRequestNodeStatus">
+          <Key>
+            <PropertyRef Name="ActivityID" />
+            <PropertyRef Name="PreActivityID" />
+            <PropertyRef Name="WorkFlowID" />
+            <PropertyRef Name="FromNodeID" />
+            <PropertyRef Name="ToNodeID" />
+            <PropertyRef Name="StatusId" />
+            <PropertyRef Name="ActivityDate" />
+            <PropertyRef Name="GroupID" />
+            <PropertyRef Name="LogicalDelete" />
+            <PropertyRef Name="FromNodeTitle" />
+            <PropertyRef Name="ToNodeTitle" />
+            <PropertyRef Name="RequestID" />
+            <PropertyRef Name="RegDate" />
+            <PropertyRef Name="UserAccount" />
+            <PropertyRef Name="RequestTypeID" />
+          </Key>
+          <Property Name="ActivityID" Type="bigint" Nullable="false" />
+          <Property Name="PreActivityID" Type="bigint" Nullable="false" />
+          <Property Name="WorkFlowID" Type="smallint" Nullable="false" />
+          <Property Name="FromNodeID" Type="int" Nullable="false" />
+          <Property Name="ToNodeID" Type="int" Nullable="false" />
+          <Property Name="StatusId" Type="smallint" Nullable="false" />
+          <Property Name="ActivityDate" Type="datetime" Nullable="false" />
+          <Property Name="ActivityUserAccount" Type="nvarchar" MaxLength="250" />
+          <Property Name="ToUserAccount" Type="nvarchar" MaxLength="250" />
+          <Property Name="GroupID" Type="int" Nullable="false" />
+          <Property Name="LogicalDelete" Type="bit" Nullable="false" />
+          <Property Name="ActivityDescription" Type="nvarchar(max)" />
+          <Property Name="FromNodeTitle" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="ToNodeTitle" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="RequestID" Type="bigint" Nullable="false" />
+          <Property Name="RegDate" Type="datetime" Nullable="false" />
+          <Property Name="UserAccount" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="RequestTypeID" Type="smallint" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'PardisDB.dbo.vwTask' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -83,6 +319,20 @@ warning 6002: The table/view 'PardisDB.dbo.vwTask' does not have a primary key d
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="datetime" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PardisDB.dbo.vwUserGroups' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwUserGroups">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="GroupID" />
+            <PropertyRef Name="Title" />
+          </Key>
+          <Property Name="UserID" Type="bigint" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="GroupID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
         <Association Name="FK_LogUserLogin_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="LogUserLogin" Type="Self.LogUserLogin" Multiplicity="*" />
@@ -95,6 +345,54 @@ warning 6002: The table/view 'PardisDB.dbo.vwTask' does not have a primary key d
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MenusGroup_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+          <End Role="MenusGroup" Type="Self.MenusGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MenusGroup">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenusGroup_Menus">
+          <End Role="Menus" Type="Self.Menus" Multiplicity="1" />
+          <End Role="MenusGroup" Type="Self.MenusGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MenusGroup">
+              <PropertyRef Name="MenuID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplyEquipments_tbl_needs">
+          <End Role="tbl_needs" Type="Self.tbl_needs" Multiplicity="1" />
+          <End Role="SupplyEquipments" Type="Self.SupplyEquipments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_needs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SupplyEquipments">
+              <PropertyRef Name="NeedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplyEquipments_tbl_profiles">
+          <End Role="tbl_profiles" Type="Self.tbl_profiles" Multiplicity="1" />
+          <End Role="SupplyEquipments" Type="Self.SupplyEquipments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_profiles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SupplyEquipments">
+              <PropertyRef Name="ProfileID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Task_BaseInfo">
           <End Role="BaseInfo" Type="Self.BaseInfo" Multiplicity="1" />
           <End Role="Task" Type="Self.Task" Multiplicity="*" />
@@ -104,6 +402,30 @@ warning 6002: The table/view 'PardisDB.dbo.vwTask' does not have a primary key d
             </Principal>
             <Dependent Role="Task">
               <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGroups_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+          <End Role="UserGroups" Type="Self.UserGroups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserGroups">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGroups_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserGroups" Type="Self.UserGroups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserGroups">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -133,11 +455,58 @@ warning 6002: The table/view 'PardisDB.dbo.vwTask' does not have a primary key d
         </Association>
         <EntityContainer Name="PardisDBModelStoreContainer">
           <EntitySet Name="BaseInfo" EntityType="Self.BaseInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LogUserLogin" EntityType="Self.LogUserLogin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Menus" EntityType="Self.Menus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MenusGroup" EntityType="Self.MenusGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Nodes" EntityType="Self.Nodes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Requests" EntityType="Self.Requests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sliders" EntityType="Self.Sliders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SupplyEquipments" EntityType="Self.SupplyEquipments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_needs" EntityType="Self.tbl_needs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_profiles" EntityType="Self.tbl_profiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserGroups" EntityType="Self.UserGroups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserTasks" EntityType="Self.UserTasks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WFActivity" EntityType="Self.WFActivity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WFAssignments" EntityType="Self.WFAssignments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Workflows" EntityType="Self.Workflows" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwMenuGroup" EntityType="Self.vwMenuGroup" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwMenuGroup].[ID] AS [ID], 
+    [vwMenuGroup].[ParentID] AS [ParentID], 
+    [vwMenuGroup].[Title] AS [Title], 
+    [vwMenuGroup].[Description] AS [Description], 
+    [vwMenuGroup].[IsCartable] AS [IsCartable], 
+    [vwMenuGroup].[NodeID] AS [NodeID], 
+    [vwMenuGroup].[Path] AS [Path], 
+    [vwMenuGroup].[GroupID] AS [GroupID], 
+    [vwMenuGroup].[GroupTitle] AS [GroupTitle]
+    FROM [dbo].[vwMenuGroup] AS [vwMenuGroup]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwRequestNodeStatus" EntityType="Self.vwRequestNodeStatus" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwRequestNodeStatus].[ActivityID] AS [ActivityID], 
+    [vwRequestNodeStatus].[PreActivityID] AS [PreActivityID], 
+    [vwRequestNodeStatus].[WorkFlowID] AS [WorkFlowID], 
+    [vwRequestNodeStatus].[FromNodeID] AS [FromNodeID], 
+    [vwRequestNodeStatus].[ToNodeID] AS [ToNodeID], 
+    [vwRequestNodeStatus].[StatusId] AS [StatusId], 
+    [vwRequestNodeStatus].[ActivityDate] AS [ActivityDate], 
+    [vwRequestNodeStatus].[ActivityUserAccount] AS [ActivityUserAccount], 
+    [vwRequestNodeStatus].[ToUserAccount] AS [ToUserAccount], 
+    [vwRequestNodeStatus].[GroupID] AS [GroupID], 
+    [vwRequestNodeStatus].[LogicalDelete] AS [LogicalDelete], 
+    [vwRequestNodeStatus].[ActivityDescription] AS [ActivityDescription], 
+    [vwRequestNodeStatus].[FromNodeTitle] AS [FromNodeTitle], 
+    [vwRequestNodeStatus].[ToNodeTitle] AS [ToNodeTitle], 
+    [vwRequestNodeStatus].[RequestID] AS [RequestID], 
+    [vwRequestNodeStatus].[RegDate] AS [RegDate], 
+    [vwRequestNodeStatus].[UserAccount] AS [UserAccount], 
+    [vwRequestNodeStatus].[RequestTypeID] AS [RequestTypeID]
+    FROM [dbo].[vwRequestNodeStatus] AS [vwRequestNodeStatus]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vwTask" EntityType="Self.vwTask" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vwTask].[UTID] AS [UTID], 
@@ -152,13 +521,45 @@ warning 6002: The table/view 'PardisDB.dbo.vwTask' does not have a primary key d
     [vwTask].[EndDate] AS [EndDate]
     FROM [dbo].[vwTask] AS [vwTask]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vwUserGroups" EntityType="Self.vwUserGroups" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwUserGroups].[UserID] AS [UserID], 
+    [vwUserGroups].[UserName] AS [UserName], 
+    [vwUserGroups].[GroupID] AS [GroupID], 
+    [vwUserGroups].[Title] AS [Title]
+    FROM [dbo].[vwUserGroups] AS [vwUserGroups]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_LogUserLogin_Users" Association="Self.FK_LogUserLogin_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="LogUserLogin" EntitySet="LogUserLogin" />
           </AssociationSet>
+          <AssociationSet Name="FK_MenusGroup_Groups" Association="Self.FK_MenusGroup_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="MenusGroup" EntitySet="MenusGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenusGroup_Menus" Association="Self.FK_MenusGroup_Menus">
+            <End Role="Menus" EntitySet="Menus" />
+            <End Role="MenusGroup" EntitySet="MenusGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplyEquipments_tbl_needs" Association="Self.FK_SupplyEquipments_tbl_needs">
+            <End Role="tbl_needs" EntitySet="tbl_needs" />
+            <End Role="SupplyEquipments" EntitySet="SupplyEquipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplyEquipments_tbl_profiles" Association="Self.FK_SupplyEquipments_tbl_profiles">
+            <End Role="tbl_profiles" EntitySet="tbl_profiles" />
+            <End Role="SupplyEquipments" EntitySet="SupplyEquipments" />
+          </AssociationSet>
           <AssociationSet Name="FK_Task_BaseInfo" Association="Self.FK_Task_BaseInfo">
             <End Role="BaseInfo" EntitySet="BaseInfo" />
             <End Role="Task" EntitySet="Task" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserGroups_Groups" Association="Self.FK_UserGroups_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="UserGroups" EntitySet="UserGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserGroups_Users" Association="Self.FK_UserGroups_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserGroups" EntitySet="UserGroups" />
           </AssociationSet>
           <AssociationSet Name="FK_UserTasks_Task" Association="Self.FK_UserTasks_Task">
             <End Role="Task" EntitySet="Task" />
@@ -182,6 +583,7 @@ warning 6002: The table/view 'PardisDB.dbo.vwTask' does not have a primary key d
           <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="UserTasks" Relationship="PardisDBModel.FK_UserTasks_Users" FromRole="Users" ToRole="UserTasks" />
           <NavigationProperty Name="LogUserLogin" Relationship="PardisDBModel.FK_LogUserLogin_Users" FromRole="Users" ToRole="LogUserLogin" />
+          <NavigationProperty Name="UserGroups" Relationship="PardisDBModel.FK_UserGroups_Users" FromRole="Users" ToRole="UserGroups" />
         </EntityType>
         <EntityContainer Name="PardisDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Users" EntityType="Self.Users" />
@@ -207,6 +609,45 @@ warning 6002: The table/view 'PardisDB.dbo.vwTask' does not have a primary key d
             <End Role="Users" EntitySet="Users" />
             <End Role="LogUserLogin" EntitySet="LogUserLogin" />
           </AssociationSet>
+          <EntitySet Name="Groups" EntityType="PardisDBModel.Groups" />
+          <EntitySet Name="Menus" EntityType="PardisDBModel.Menus" />
+          <EntitySet Name="MenusGroup" EntityType="PardisDBModel.MenusGroup" />
+          <EntitySet Name="Nodes" EntityType="PardisDBModel.Nodes" />
+          <EntitySet Name="UserGroups" EntityType="PardisDBModel.UserGroups" />
+          <EntitySet Name="WFActivity" EntityType="PardisDBModel.WFActivity" />
+          <EntitySet Name="WFAssignments" EntityType="PardisDBModel.WFAssignments" />
+          <EntitySet Name="Workflows" EntityType="PardisDBModel.Workflows" />
+          <EntitySet Name="vwMenuGroup" EntityType="PardisDBModel.vwMenuGroup" />
+          <EntitySet Name="vwUserGroups" EntityType="PardisDBModel.vwUserGroups" />
+          <AssociationSet Name="FK_MenusGroup_Groups" Association="PardisDBModel.FK_MenusGroup_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="MenusGroup" EntitySet="MenusGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserGroups_Groups" Association="PardisDBModel.FK_UserGroups_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="UserGroups" EntitySet="UserGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenusGroup_Menus" Association="PardisDBModel.FK_MenusGroup_Menus">
+            <End Role="Menus" EntitySet="Menus" />
+            <End Role="MenusGroup" EntitySet="MenusGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserGroups_Users" Association="PardisDBModel.FK_UserGroups_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserGroups" EntitySet="UserGroups" />
+          </AssociationSet>
+          <EntitySet Name="tbl_needs" EntityType="PardisDBModel.tbl_needs" />
+          <EntitySet Name="tbl_profiles" EntityType="PardisDBModel.tbl_profiles" />
+          <EntitySet Name="Requests" EntityType="PardisDBModel.Requests" />
+          <EntitySet Name="SupplyEquipments" EntityType="PardisDBModel.SupplyEquipments" />
+          <AssociationSet Name="FK_SupplyEquipments_tbl_needs" Association="PardisDBModel.FK_SupplyEquipments_tbl_needs">
+            <End Role="tbl_needs" EntitySet="tbl_needs" />
+            <End Role="SupplyEquipments" EntitySet="SupplyEquipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplyEquipments_tbl_profiles" Association="PardisDBModel.FK_SupplyEquipments_tbl_profiles">
+            <End Role="tbl_profiles" EntitySet="tbl_profiles" />
+            <End Role="SupplyEquipments" EntitySet="SupplyEquipments" />
+          </AssociationSet>
+          <EntitySet Name="vwRequestNodeStatus" EntityType="PardisDBModel.vwRequestNodeStatus" />
         </EntityContainer>
         <EntityType Name="Sliders">
           <Key>
@@ -330,6 +771,333 @@ warning 6002: The table/view 'PardisDB.dbo.vwTask' does not have a primary key d
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Groups">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MenusGroup" Relationship="PardisDBModel.FK_MenusGroup_Groups" FromRole="Groups" ToRole="MenusGroup" />
+          <NavigationProperty Name="UserGroups" Relationship="PardisDBModel.FK_UserGroups_Groups" FromRole="Groups" ToRole="UserGroups" />
+        </EntityType>
+        <EntityType Name="Menus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsCartable" Type="Boolean" Nullable="false" />
+          <Property Name="NodeID" Type="Int32" Nullable="false" />
+          <Property Name="Path" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MenusGroup" Relationship="PardisDBModel.FK_MenusGroup_Menus" FromRole="Menus" ToRole="MenusGroup" />
+        </EntityType>
+        <EntityType Name="MenusGroup">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MenuID" Type="Int32" Nullable="false" />
+          <Property Name="GroupID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Groups" Relationship="PardisDBModel.FK_MenusGroup_Groups" FromRole="MenusGroup" ToRole="Groups" />
+          <NavigationProperty Name="Menus" Relationship="PardisDBModel.FK_MenusGroup_Menus" FromRole="MenusGroup" ToRole="Menus" />
+        </EntityType>
+        <EntityType Name="Nodes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="UserGroups">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="GroupID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Groups" Relationship="PardisDBModel.FK_UserGroups_Groups" FromRole="UserGroups" ToRole="Groups" />
+          <NavigationProperty Name="Users" Relationship="PardisDBModel.FK_UserGroups_Users" FromRole="UserGroups" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="WFActivity">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PreActivityID" Type="Int64" Nullable="false" />
+          <Property Name="WorkFlowID" Type="Int16" Nullable="false" />
+          <Property Name="RequestID" Type="Int64" Nullable="false" />
+          <Property Name="FromNodeID" Type="Int32" Nullable="false" />
+          <Property Name="ToNodeID" Type="Int32" Nullable="false" />
+          <Property Name="StatusId" Type="Int16" Nullable="false" />
+          <Property Name="ActivityDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserAccount" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ToUserAccount" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="GroupID" Type="Int32" Nullable="false" />
+          <Property Name="ActivityDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LogicalDelete" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WFAssignments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkFlowID" Type="Int16" Nullable="false" />
+          <Property Name="FromNodeID" Type="Int32" Nullable="false" />
+          <Property Name="ToNodeID" Type="Int32" Nullable="false" />
+          <Property Name="DoConfirm" Type="Boolean" Nullable="false" />
+          <Property Name="DoReject" Type="Boolean" Nullable="false" />
+          <Property Name="DoReturn" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Workflows">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int16" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="StartNodeID" Type="Int32" Nullable="false" />
+          <Property Name="EndNodeID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vwMenuGroup">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ParentID" />
+            <PropertyRef Name="Title" />
+            <PropertyRef Name="IsCartable" />
+            <PropertyRef Name="NodeID" />
+            <PropertyRef Name="GroupID" />
+            <PropertyRef Name="GroupTitle" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ParentID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsCartable" Type="Boolean" Nullable="false" />
+          <Property Name="NodeID" Type="Int32" Nullable="false" />
+          <Property Name="Path" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="GroupID" Type="Int32" Nullable="false" />
+          <Property Name="GroupTitle" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vwUserGroups">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="GroupID" />
+            <PropertyRef Name="Title" />
+          </Key>
+          <Property Name="UserID" Type="Int64" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="GroupID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_MenusGroup_Groups">
+          <End Type="PardisDBModel.Groups" Role="Groups" Multiplicity="1" />
+          <End Type="PardisDBModel.MenusGroup" Role="MenusGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MenusGroup">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGroups_Groups">
+          <End Type="PardisDBModel.Groups" Role="Groups" Multiplicity="1" />
+          <End Type="PardisDBModel.UserGroups" Role="UserGroups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserGroups">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenusGroup_Menus">
+          <End Type="PardisDBModel.Menus" Role="Menus" Multiplicity="1" />
+          <End Type="PardisDBModel.MenusGroup" Role="MenusGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MenusGroup">
+              <PropertyRef Name="MenuID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGroups_Users">
+          <End Type="PardisDBModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="PardisDBModel.UserGroups" Role="UserGroups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserGroups">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tbl_needs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="factorneed" Type="Boolean" />
+          <Property Name="factordate" Type="DateTime" Precision="3" />
+          <Property Name="factorip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="factorby" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="profileid" Type="Int32" />
+          <Property Name="catid" Type="Int32" />
+          <Property Name="subcatid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sectorid" Type="Int32" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="confirmby" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="confirmip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="confirmdate" Type="DateTime" Precision="3" />
+          <Property Name="progress" Type="Int32" />
+          <Property Name="iscampaign" Type="Boolean" />
+          <Property Name="nexttime" Type="Int32" />
+          <Property Name="nextdates" Type="Int32" />
+          <Property Name="laststatusdesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="laststatusdescdates" Type="DateTime" Precision="3" />
+          <Property Name="laststatusdescby" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="toclnd" Type="DateTime" Precision="3" />
+          <Property Name="price" Type="Double" />
+          <Property Name="csproviderid" Type="Int32" />
+          <Property Name="editedby" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="editedip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="editeddate" Type="DateTime" Precision="3" />
+          <Property Name="userid" Type="Int32" />
+          <Property Name="assignby" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="assigndate" Type="DateTime" Precision="3" />
+          <Property Name="departmentid" Type="Int32" />
+          <NavigationProperty Name="SupplyEquipments" Relationship="PardisDBModel.FK_SupplyEquipments_tbl_needs" FromRole="tbl_needs" ToRole="SupplyEquipments" />
+        </EntityType>
+        <EntityType Name="tbl_profiles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="isperson" Type="Int32" />
+          <Property Name="birthdate" Type="Int32" />
+          <Property Name="birthplace" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="registerdate" Type="DateTime" Precision="3" />
+          <Property Name="fathername" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="uniquename" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="repname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="code" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="manager" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="idnumber" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="place" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="edulevel" Type="Int32" />
+          <Property Name="edufield" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="job" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="postalcode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tel" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="howyouknowid" Type="Int32" />
+          <Property Name="usergroup" Type="Int32" />
+          <Property Name="isProvider" Type="Int32" />
+          <Property Name="acccotactconfirm" Type="Boolean" />
+          <Property Name="iscampaign" Type="Boolean" />
+          <NavigationProperty Name="SupplyEquipments" Relationship="PardisDBModel.FK_SupplyEquipments_tbl_profiles" FromRole="tbl_profiles" ToRole="SupplyEquipments" />
+        </EntityType>
+        <EntityType Name="Requests">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RegDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserAccount" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="RequestTypeID" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SupplyEquipments">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestID" Type="Int64" Nullable="false" />
+          <Property Name="ProfileID" Type="Int32" Nullable="false" />
+          <Property Name="NeedID" Type="Int32" Nullable="false" />
+          <Property Name="RequestTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="PriceAnnouncementDeadline" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeliveryDeadline" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RequestTypeID" Type="Int16" />
+          <Property Name="WarrantyTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_needs" Relationship="PardisDBModel.FK_SupplyEquipments_tbl_needs" FromRole="SupplyEquipments" ToRole="tbl_needs" />
+          <NavigationProperty Name="tbl_profiles" Relationship="PardisDBModel.FK_SupplyEquipments_tbl_profiles" FromRole="SupplyEquipments" ToRole="tbl_profiles" />
+        </EntityType>
+        <Association Name="FK_SupplyEquipments_tbl_needs">
+          <End Type="PardisDBModel.tbl_needs" Role="tbl_needs" Multiplicity="1" />
+          <End Type="PardisDBModel.SupplyEquipments" Role="SupplyEquipments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_needs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SupplyEquipments">
+              <PropertyRef Name="NeedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplyEquipments_tbl_profiles">
+          <End Type="PardisDBModel.tbl_profiles" Role="tbl_profiles" Multiplicity="1" />
+          <End Type="PardisDBModel.SupplyEquipments" Role="SupplyEquipments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_profiles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SupplyEquipments">
+              <PropertyRef Name="ProfileID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vwRequestNodeStatus">
+          <Key>
+            <PropertyRef Name="ActivityID" />
+            <PropertyRef Name="PreActivityID" />
+            <PropertyRef Name="WorkFlowID" />
+            <PropertyRef Name="FromNodeID" />
+            <PropertyRef Name="ToNodeID" />
+            <PropertyRef Name="StatusId" />
+            <PropertyRef Name="ActivityDate" />
+            <PropertyRef Name="GroupID" />
+            <PropertyRef Name="LogicalDelete" />
+            <PropertyRef Name="FromNodeTitle" />
+            <PropertyRef Name="ToNodeTitle" />
+            <PropertyRef Name="RequestID" />
+            <PropertyRef Name="RegDate" />
+            <PropertyRef Name="UserAccount" />
+            <PropertyRef Name="RequestTypeID" />
+          </Key>
+          <Property Name="ActivityID" Type="Int64" Nullable="false" />
+          <Property Name="PreActivityID" Type="Int64" Nullable="false" />
+          <Property Name="WorkFlowID" Type="Int16" Nullable="false" />
+          <Property Name="FromNodeID" Type="Int32" Nullable="false" />
+          <Property Name="ToNodeID" Type="Int32" Nullable="false" />
+          <Property Name="StatusId" Type="Int16" Nullable="false" />
+          <Property Name="ActivityDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ActivityUserAccount" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ToUserAccount" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="GroupID" Type="Int32" Nullable="false" />
+          <Property Name="LogicalDelete" Type="Boolean" Nullable="false" />
+          <Property Name="ActivityDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FromNodeTitle" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ToNodeTitle" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="RequestID" Type="Int64" Nullable="false" />
+          <Property Name="RegDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserAccount" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="RequestTypeID" Type="Int16" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -409,6 +1177,242 @@ warning 6002: The table/view 'PardisDB.dbo.vwTask' does not have a primary key d
                 <ScalarProperty Name="LogDate" ColumnName="LogDate" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="LogID" ColumnName="LogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="PardisDBModel.Groups">
+              <MappingFragment StoreEntitySet="Groups">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Menus">
+            <EntityTypeMapping TypeName="PardisDBModel.Menus">
+              <MappingFragment StoreEntitySet="Menus">
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="NodeID" ColumnName="NodeID" />
+                <ScalarProperty Name="IsCartable" ColumnName="IsCartable" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MenusGroup">
+            <EntityTypeMapping TypeName="PardisDBModel.MenusGroup">
+              <MappingFragment StoreEntitySet="MenusGroup">
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="MenuID" ColumnName="MenuID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Nodes">
+            <EntityTypeMapping TypeName="PardisDBModel.Nodes">
+              <MappingFragment StoreEntitySet="Nodes">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserGroups">
+            <EntityTypeMapping TypeName="PardisDBModel.UserGroups">
+              <MappingFragment StoreEntitySet="UserGroups">
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WFActivity">
+            <EntityTypeMapping TypeName="PardisDBModel.WFActivity">
+              <MappingFragment StoreEntitySet="WFActivity">
+                <ScalarProperty Name="LogicalDelete" ColumnName="LogicalDelete" />
+                <ScalarProperty Name="ActivityDescription" ColumnName="ActivityDescription" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="ToUserAccount" ColumnName="ToUserAccount" />
+                <ScalarProperty Name="UserAccount" ColumnName="UserAccount" />
+                <ScalarProperty Name="ActivityDate" ColumnName="ActivityDate" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="ToNodeID" ColumnName="ToNodeID" />
+                <ScalarProperty Name="FromNodeID" ColumnName="FromNodeID" />
+                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+                <ScalarProperty Name="WorkFlowID" ColumnName="WorkFlowID" />
+                <ScalarProperty Name="PreActivityID" ColumnName="PreActivityID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WFAssignments">
+            <EntityTypeMapping TypeName="PardisDBModel.WFAssignments">
+              <MappingFragment StoreEntitySet="WFAssignments">
+                <ScalarProperty Name="DoReturn" ColumnName="DoReturn" />
+                <ScalarProperty Name="DoReject" ColumnName="DoReject" />
+                <ScalarProperty Name="DoConfirm" ColumnName="DoConfirm" />
+                <ScalarProperty Name="ToNodeID" ColumnName="ToNodeID" />
+                <ScalarProperty Name="FromNodeID" ColumnName="FromNodeID" />
+                <ScalarProperty Name="WorkFlowID" ColumnName="WorkFlowID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Workflows">
+            <EntityTypeMapping TypeName="PardisDBModel.Workflows">
+              <MappingFragment StoreEntitySet="Workflows">
+                <ScalarProperty Name="EndNodeID" ColumnName="EndNodeID" />
+                <ScalarProperty Name="StartNodeID" ColumnName="StartNodeID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwMenuGroup">
+            <EntityTypeMapping TypeName="PardisDBModel.vwMenuGroup">
+              <MappingFragment StoreEntitySet="vwMenuGroup">
+                <ScalarProperty Name="GroupTitle" ColumnName="GroupTitle" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="NodeID" ColumnName="NodeID" />
+                <ScalarProperty Name="IsCartable" ColumnName="IsCartable" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwUserGroups">
+            <EntityTypeMapping TypeName="PardisDBModel.vwUserGroups">
+              <MappingFragment StoreEntitySet="vwUserGroups">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_needs">
+            <EntityTypeMapping TypeName="PardisDBModel.tbl_needs">
+              <MappingFragment StoreEntitySet="tbl_needs">
+                <ScalarProperty Name="departmentid" ColumnName="departmentid" />
+                <ScalarProperty Name="assigndate" ColumnName="assigndate" />
+                <ScalarProperty Name="assignby" ColumnName="assignby" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="editeddate" ColumnName="editeddate" />
+                <ScalarProperty Name="editedip" ColumnName="editedip" />
+                <ScalarProperty Name="editedby" ColumnName="editedby" />
+                <ScalarProperty Name="csproviderid" ColumnName="csproviderid" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="toclnd" ColumnName="toclnd" />
+                <ScalarProperty Name="laststatusdescby" ColumnName="laststatusdescby" />
+                <ScalarProperty Name="laststatusdescdates" ColumnName="laststatusdescdates" />
+                <ScalarProperty Name="laststatusdesc" ColumnName="laststatusdesc" />
+                <ScalarProperty Name="nextdates" ColumnName="nextdates" />
+                <ScalarProperty Name="nexttime" ColumnName="nexttime" />
+                <ScalarProperty Name="iscampaign" ColumnName="iscampaign" />
+                <ScalarProperty Name="progress" ColumnName="progress" />
+                <ScalarProperty Name="confirmdate" ColumnName="confirmdate" />
+                <ScalarProperty Name="confirmip" ColumnName="confirmip" />
+                <ScalarProperty Name="confirmby" ColumnName="confirmby" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="sectorid" ColumnName="sectorid" />
+                <ScalarProperty Name="subcatid" ColumnName="subcatid" />
+                <ScalarProperty Name="catid" ColumnName="catid" />
+                <ScalarProperty Name="profileid" ColumnName="profileid" />
+                <ScalarProperty Name="factorby" ColumnName="factorby" />
+                <ScalarProperty Name="factorip" ColumnName="factorip" />
+                <ScalarProperty Name="factordate" ColumnName="factordate" />
+                <ScalarProperty Name="factorneed" ColumnName="factorneed" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_profiles">
+            <EntityTypeMapping TypeName="PardisDBModel.tbl_profiles">
+              <MappingFragment StoreEntitySet="tbl_profiles">
+                <ScalarProperty Name="iscampaign" ColumnName="iscampaign" />
+                <ScalarProperty Name="acccotactconfirm" ColumnName="acccotactconfirm" />
+                <ScalarProperty Name="isProvider" ColumnName="isProvider" />
+                <ScalarProperty Name="usergroup" ColumnName="usergroup" />
+                <ScalarProperty Name="howyouknowid" ColumnName="howyouknowid" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="tel" ColumnName="tel" />
+                <ScalarProperty Name="postalcode" ColumnName="postalcode" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="job" ColumnName="job" />
+                <ScalarProperty Name="edufield" ColumnName="edufield" />
+                <ScalarProperty Name="edulevel" ColumnName="edulevel" />
+                <ScalarProperty Name="place" ColumnName="place" />
+                <ScalarProperty Name="idnumber" ColumnName="idnumber" />
+                <ScalarProperty Name="manager" ColumnName="manager" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="repname" ColumnName="repname" />
+                <ScalarProperty Name="uniquename" ColumnName="uniquename" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="fathername" ColumnName="fathername" />
+                <ScalarProperty Name="registerdate" ColumnName="registerdate" />
+                <ScalarProperty Name="birthplace" ColumnName="birthplace" />
+                <ScalarProperty Name="birthdate" ColumnName="birthdate" />
+                <ScalarProperty Name="isperson" ColumnName="isperson" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requests">
+            <EntityTypeMapping TypeName="PardisDBModel.Requests">
+              <MappingFragment StoreEntitySet="Requests">
+                <ScalarProperty Name="RequestTypeID" ColumnName="RequestTypeID" />
+                <ScalarProperty Name="UserAccount" ColumnName="UserAccount" />
+                <ScalarProperty Name="RegDate" ColumnName="RegDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplyEquipments">
+            <EntityTypeMapping TypeName="PardisDBModel.SupplyEquipments">
+              <MappingFragment StoreEntitySet="SupplyEquipments">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="WarrantyTerms" ColumnName="WarrantyTerms" />
+                <ScalarProperty Name="RequestTypeID" ColumnName="RequestTypeID" />
+                <ScalarProperty Name="DeliveryDeadline" ColumnName="DeliveryDeadline" />
+                <ScalarProperty Name="PriceAnnouncementDeadline" ColumnName="PriceAnnouncementDeadline" />
+                <ScalarProperty Name="RequestTitle" ColumnName="RequestTitle" />
+                <ScalarProperty Name="NeedID" ColumnName="NeedID" />
+                <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
+                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwRequestNodeStatus">
+            <EntityTypeMapping TypeName="PardisDBModel.vwRequestNodeStatus">
+              <MappingFragment StoreEntitySet="vwRequestNodeStatus">
+                <ScalarProperty Name="RequestTypeID" ColumnName="RequestTypeID" />
+                <ScalarProperty Name="UserAccount" ColumnName="UserAccount" />
+                <ScalarProperty Name="RegDate" ColumnName="RegDate" />
+                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+                <ScalarProperty Name="ToNodeTitle" ColumnName="ToNodeTitle" />
+                <ScalarProperty Name="FromNodeTitle" ColumnName="FromNodeTitle" />
+                <ScalarProperty Name="ActivityDescription" ColumnName="ActivityDescription" />
+                <ScalarProperty Name="LogicalDelete" ColumnName="LogicalDelete" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="ToUserAccount" ColumnName="ToUserAccount" />
+                <ScalarProperty Name="ActivityUserAccount" ColumnName="ActivityUserAccount" />
+                <ScalarProperty Name="ActivityDate" ColumnName="ActivityDate" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="ToNodeID" ColumnName="ToNodeID" />
+                <ScalarProperty Name="FromNodeID" ColumnName="FromNodeID" />
+                <ScalarProperty Name="WorkFlowID" ColumnName="WorkFlowID" />
+                <ScalarProperty Name="PreActivityID" ColumnName="PreActivityID" />
+                <ScalarProperty Name="ActivityID" ColumnName="ActivityID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

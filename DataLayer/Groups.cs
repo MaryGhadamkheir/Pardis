@@ -12,24 +12,21 @@ namespace DataLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class Users
+    public partial class Groups
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Users()
+        public Groups()
         {
-            this.UserTasks = new HashSet<UserTasks>();
-            this.LogUserLogin = new HashSet<LogUserLogin>();
+            this.MenusGroup = new HashSet<MenusGroup>();
             this.UserGroups = new HashSet<UserGroups>();
         }
     
-        public long UserID { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
+        public int ID { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserTasks> UserTasks { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LogUserLogin> LogUserLogin { get; set; }
+        public virtual ICollection<MenusGroup> MenusGroup { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserGroups> UserGroups { get; set; }
     }
